@@ -27,6 +27,9 @@
 </head>
 
 <body>
+    <form action="/regis/mhs" method="post">
+        {{csrf_field()}}
+    
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
@@ -36,8 +39,8 @@
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">username</label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <label class="label">Username</label>
+                                    <input class="input--style-4" type="text" name="username">
                                 </div>
                             </div>
                             
@@ -45,20 +48,20 @@
                         <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Nim</label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <input class="input--style-4" type="text" name="nim">
                                 </div>
                             </div>
 
                         <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Nama</label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <input class="input--style-4" type="text" name="nama">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Password</label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <input class="input--style-4" type="text" name="password">
                                 </div>
                             </div>
                         
@@ -70,7 +73,7 @@
             </div>
         </div>
     </div>
-
+    </form>
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
