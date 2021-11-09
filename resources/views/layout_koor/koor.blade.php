@@ -105,7 +105,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Session::get('nama')}}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Session::get('nama_lengkap')}}</span>
+                                <img src="{{Session::get('foto')}}" class="user-image img-circle elevation-2" width="40px" alt="User Image" style="background-color: white">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -128,7 +129,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; APTUKON 2021</span>
+                        <span>APTUKON 2021</span>
                     </div>
                 </div>
             </footer>

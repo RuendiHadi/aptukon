@@ -34,6 +34,11 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
+                    @if (session('sukses-regis')) <!-- Untuk regis -->
+                        <div class="alert alert-success" role="alert">
+                            <b>{{session('sukses-regis')}}</b>
+                        </div>
+                    @endif                        <!-- Untuk regis -->
                     <h2 class="title">Registrasi Mahasiswa</h2>
                     <form method="POST">
                         <div class="row row-space">
@@ -67,6 +72,7 @@
                         
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Simpan</button>
+                            <a href="/" class="label"> Sudah memiliki Akun</a>
                         </div>
                     </form>
                 </div>

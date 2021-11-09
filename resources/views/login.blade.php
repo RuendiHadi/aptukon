@@ -31,29 +31,12 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                    <h2 class="title">Login</h2>
-                    <form method="POST">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Username</label>
-                                    <input class="input--style-4" type="text" name="first_name">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Password</label>
-                                    <input class="input--style-4" type="text" name="first_name">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Login</button>
-                        </div>
-                        <img src="img/logo_skripsi.png" alt="" style="margin-left:280px;">
-
+                
+                    <h2 class="title" style="margin-left:70px">Aplikasi Pencetakan Kartu Konsultasi</h2>
+                    <form method="POST" action="auth/login"> <!-- Untuk Login -->
+                        
+                        <img src="img/logo_skripsi.png" alt="" style="margin-left:150px">
+                        <a href="/redirect"class="btn btn--radius-2 btn--blue" style="margin-top:15px; margin-left:150px;text-decoration:none;">Login with google</a>
                     </form>
                 </div>
             </div>

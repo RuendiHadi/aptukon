@@ -53,9 +53,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="/mahasiswa/data_diri">
+                <a class="nav-link" href="/mahasiswa/pengajuan/konsultasi/{{Session::get('email')}}">
                     <i class="fas fa-clipboard-list"></i>
-                    <span>Data diri</span></a>
+                    <span>Pengajuan Konsultasi</span></a>
             </li>
 
             <!-- Nav Item - Charts -->
@@ -106,6 +106,10 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/update/mhs/profile/{{Session::get('email')}}">
+                                    <i class="fas fa-user-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
                                 <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -154,6 +158,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Membuat profile -->
+    <div class="modal fade" id="modalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Profile</h5> 
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                 <form role="form" method="post" enctype="multipart/form-data" action="/update/mhs/profile/aksi/{{Session::get('email')}}">
+                     {{csrf_field()}}
+                    <div class="container">
+                         <div class="box-body">
+                    <div class="form-group">
+                        <label for="semester">Nama Lengkap:</label>
+                        <input type="text" class="form-control" name="nama_lengkap" value="{{Session::get('nama_lengkap')}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">NIM:</label>
+                        <input type="text" class="form-control" name="nim_nik" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Email SI:</label>
+                        <input type="text" class="form-control" name="email" value="{{Session::get('email')}}" disabled/>
+                    </div>
+                  </div>
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Membuat profile -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('aw/vendor1/jquery/jquery.min.js')}}"></script>

@@ -19,13 +19,19 @@ class RegisterController extends Controller
         $data=array(
             'id_role'=>1,
             'username'=>$username,
-            'nim'=>$nim,
             'nama'=>$nama,
             'password'=>$password
         );
+        $mahasiswa=array(
+            'username'=>$username,
+            'nim'=>$nim,
+            'nama'=>$nama
+        );
         $insert_user=DB::table('user')->insert($data);
+        $insert_mahasiswa=DB::table('mahasiswa')->insert($mahasiswa);
+
         if($insert_user){
-            echo "oke";
+            return redirect('/register')->with('sukses-regis','Berhasil registrasi');
         }else{
             echo "gagal";
         }
