@@ -1,38 +1,5 @@
-@extends('../layout_koor.koor')
-@section('title-koor')
-Daftar Dosen
-@endsection
-@section('content')
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- Page Heading -->
-
-                    <h1 class="h3 mb-4 text-gray-800">Daftar Dosen</h1>
-                    <a href="/koor/tambah/dosen" class="btn btn-sm btn-primary mb-3">Tambah Dosen</a>
-                    <table class="table table-striped table-hover">
-                      <thead>
-                                    <tr>
-                                      <!-- <th scope="col">ID  </th> -->
-                                      <th scope="col">No</th>
-                                      <th scope="col">NIP</th>
-                                      <th scope="col">Nama</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    
-                                    @foreach($daftar_dosen as $dd)
-                                    <tr>
-                                      <td>{{$loop->iteration}}</td>
-                                      <td>{{$dd->nim}}</td>
-                                      <td>{{$dd->nama_lengkap}}</td>
-                                    </tr>
-                                    @endforeach  
-                                  </tbody>
-                    </table>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->
-
-@endsection
+$daftar_konsul = DB::table('master_konsultasi')
+            ->join('master_mahasiswa', 'master_konsultasi.email', '=', 'master_mahasiswa.email')
+            ->select('master_konsultasi.*', 'master_mahasiswa.*')
+            ->get();
+        return view('koor/lihat_jadwal_konsul',compact('daftar_konsul'));
