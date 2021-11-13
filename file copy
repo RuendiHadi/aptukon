@@ -1,12 +1,15 @@
-Route::get('/koor/daftar/dosen','KoorController@daftar_dosen');
-Route::get('/koor/lihat/jadwal/konsul','KoorController@lihat_jadwal_konsul');
-
-
-Route::post('detail/ajax','AjaxController@detail');
-
-Route::get('/a','AjaxController@index');
-
-Route::post('/koor/detail/konsul','KoorController@detail_konsul');
-Route::get('/koor/detail/konsul/id/{id}','KoorController@detail_konsul_id');
-Route::post('/tampil/detail/konsul','KoorController@tampil_detail_konsul');
-Route::post('/koor/simpan/judul','KoorController@simpan_judul_konsul');
+if($nohd=="gmail.com"){
+                $inserToUser = DB::TABLE('user')->insert($toUser);
+                $insertToMasterMahasiswa = DB::TABLE('master_koordinator')->insert($toMasterMahasiswa);
+                return redirect('/koor/home');
+            }else if($nohd=="si.ukdw.ac.id"){
+                $inserToUser = DB::TABLE('user')->insert($toUser);
+                $insertToMasterMahasiswa = DB::TABLE('master_mahasiswa')->insert($toMasterMahasiswa);
+                return redirect('/mahasiswa/home');
+            }else if($nohd=="students.ukdw.ac.id"){
+                $inserToUser = DB::TABLE('user')->insert($toUser);
+               $insertToMasterMahasiswa = DB::TABLE('master_dosen')->insert($toMasterMahasiswa);
+               return redirect('/dosen/home');
+            }else{
+                echo "Tidak ada";
+            }
