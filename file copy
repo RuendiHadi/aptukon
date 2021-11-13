@@ -1,68 +1,130 @@
-public function detail_konsul(Request $request)
-    {
-         $id = $request->id_detail;
+@extends('../layout_koor.koor')
+@section('title-koor')
+Detail Konsultasi
+@endsection
+@section('content')
 
-         $detail_konsul = DB::table('master_konsultasi')
-                          ->join('master_mahasiswa','master_konsultasi.email', '=', 'master_mahasiswa.email')
-                          ->select('master_konsultasi.*','master_mahasiswa.*')
-                          ->where('master_konsultasi.id_konsul',$id)->get();
-         $data = array(
-            'id_konsul' => $detail_konsul[0]->id_konsul
-         ); 
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
 
-         echo json_encode($data);
-    }
+                    <h1 class="h3 mb-4 text-gray-800 text-center" >Detail Konsultasi</h1>
+                    <input type="hidden" name="id_konsul" id="id_konsul" value="{{$idd}}">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="card-body">
+                          <h1 class="h3 mb-4 text-gray-800">Profil dan Judul</h1>
+                          <div class="form-group">
+                          <label>Nim</label>
+                          <input type="text" class="form-control" name="nim" id="nim" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" class="form-control" name="nama" id="nama" readonly>
+                          </div>
+                          <div class="form-group">
+                              <label>Judul Skripsi</label>
+                              <textarea class="form-control" name="judul_skripsi" id="judul_skripsi"></textarea>
+                          </div>
+                          <div class="form-group">
 
-    public function detail_konsul_id($id)
-    {
-        $idd = $id;
-        return view('koor/detail_konsul',compact('idd'));
-    }
+                            <!-- <input type="button" name="edit_judul" onclick="edit_judul()" class="btn btn-primary" value="" id="edit_judul"> -->
+                            <button type="button" id="edit_judul" onclick="edit_judul()" class="btn btn-info"><i class="fas fa-edit"></i></button>
+                            <button type="button" id="simpan_judul" onclick="simpan_judul()" class="btn btn-success"><i class="fas fa-check"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="card-body">
+                          <h1 class="h3 mb-4 text-gray-800">Perubahan</h1>
+                          <div class="form-group">
+                            <label for="exampleFormControlSelect1">Pilih Dosen</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                              <label>Komentar</label>
+                              <textarea class="form-control" name="komen_judul" id="komen_judul"></textarea>
+                          </div>
 
-    public function tampil_detail_konsul(Request $request)
-    {
-        $id = $request->id_konsul;
+                        </div>
+                      </div>
+                    </div>
+                    
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
 
-        $detail_konsul = DB::table('master_konsultasi')
-                      ->join('master_mahasiswa','master_konsultasi.email', '=', 'master_mahasiswa.email')
-                      ->select('master_konsultasi.*','master_mahasiswa.*')
-                      ->where('master_konsultasi.id_konsul',$id)->get();
-        $data = array(
-            'id_konsul' => $detail_konsul[0]->id_konsul,
-            'email' => $detail_konsul[0]->email,
-            'judul_skripsi' => $detail_konsul[0]->judul_skripsi,
-            'nim' => $detail_konsul[0]->nim,
-            'nama_lengkap' => $detail_konsul[0]->nama_lengkap
-         );
+@endsection
+@section('javascript')
 
-        echo json_encode($data);
-    }
+  <script type="text/javascript">
+    $.ajaxSetup({
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       }
+   });
 
-    public function edit_judul()
-    {
-        $a = 1;
-        if($a=='1'){
-            echo json_encode('ubah');
+  $(document).ready(function(){
+    var id = $('#id_konsul').val()
+    
+    $.ajax({
+      url : '/tampil/detail/konsul',
+      data : {
+        'id_konsul' : id
+      },
+      type : 'post',
+      dataType : 'json',
+      success : function(response){
+        $('#nim').val(response.nim);
+        $('#nama').val(response.nama_lengkap);
+        $('#judul_skripsi').val(response.judul_skripsi).attr("disabled",true);
+        $('#simpan_judul').attr("disabled",true);
+      }
+    });
+  });
+
+
+  function edit_judul(){
+    $("#judul_skripsi").prop('disabled', false);
+    $('#simpan_judul').attr("disabled",false);
+  }
+
+  function simpan_judul(){
+    var id_konsul = $('#id_konsul').val();
+    var judul =  $('textarea#judul_skripsi').val();
+    $.ajax({
+      url : '/koor/simpan/judul',
+      data : {
+        'id_konsul' : id_konsul,
+        'judul' : judul
+      },
+      type : 'post',
+      dataType : 'json',
+      success : function(response){
+        if(response=="OK"){
+          alert("Judul berhasil diubah");
+          $('.form-group #judul_skripsi').prop("disabled", "disabled");
+          $('.form-group #simpan_judul').attr("disabled",true);
         }
-        print_r($a);
-    }
-
-    public function simpan_judul_konsul(Request $request)
-    {
-        $id_konsul = $request->id_konsul;
-        $judul = $request->judul;
-
-        if($judul==$judul){
-            $pesan = "OK";
-        }else{
-            $update = DB::TABLE('master_konsultasi')->where('id_konsul',$id_konsul)->update(['judul_skripsi'=>$judul]);
-            if($update){
-                $pesan = "OK";
-            }else{
-                $pesan = "NO";
-            }
-        }
-
         
-        echo json_encode($pesan);
-    }
+        
+      } 
+    });
+  }
+  
+
+ 
+
+
+
+
+  </script>
+
+@endsection
