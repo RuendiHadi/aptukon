@@ -1,75 +1,68 @@
-@extends('../layout_koor.koor')
-@section('title-koor')
-Daftar Konsultasi
-@endsection
-@section('content')
+public function detail_konsul(Request $request)
+    {
+         $id = $request->id_detail;
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- Page Heading -->
-                   
-                    <h1 class="h3 mb-4 text-gray-800">Konsultasi Mahasiswa</h1>
+         $detail_konsul = DB::table('master_konsultasi')
+                          ->join('master_mahasiswa','master_konsultasi.email', '=', 'master_mahasiswa.email')
+                          ->select('master_konsultasi.*','master_mahasiswa.*')
+                          ->where('master_konsultasi.id_konsul',$id)->get();
+         $data = array(
+            'id_konsul' => $detail_konsul[0]->id_konsul
+         ); 
 
-                    <!-- <a href="/koor/tambah/dosen" class="btn btn-sm btn-primary mb-3">Tambah Dosen</a> -->
-                    <table class="table table-striped table-hover">
-                      <thead>
-                          <tr>
-                            <!-- <th scope="col">ID  </th> -->
-                            <th scope="col">No</th>
-                            <th scope="col">NIM</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Judul</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          
-                          @foreach($daftar_konsul as $dk)
-                          <tr ondblclick="detail_dk({{$dk->id_konsul}})">
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$dk->nim}}</td>
-                            <td>{{$dk->nama_lengkap}}</td>
-                            <td>{{$dk->judul_skripsi}}</td>
-                          </tr>
-                          @endforeach  
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->
-            <div class="row">
-                            
-                        </div>
+         echo json_encode($data);
+    }
 
+    public function detail_konsul_id($id)
+    {
+        $idd = $id;
+        return view('koor/detail_konsul',compact('idd'));
+    }
 
+    public function tampil_detail_konsul(Request $request)
+    {
+        $id = $request->id_konsul;
 
-@endsection
-@section('javascript')
-<script type="text/javascript">
+        $detail_konsul = DB::table('master_konsultasi')
+                      ->join('master_mahasiswa','master_konsultasi.email', '=', 'master_mahasiswa.email')
+                      ->select('master_konsultasi.*','master_mahasiswa.*')
+                      ->where('master_konsultasi.id_konsul',$id)->get();
+        $data = array(
+            'id_konsul' => $detail_konsul[0]->id_konsul,
+            'email' => $detail_konsul[0]->email,
+            'judul_skripsi' => $detail_konsul[0]->judul_skripsi,
+            'nim' => $detail_konsul[0]->nim,
+            'nama_lengkap' => $detail_konsul[0]->nama_lengkap
+         );
 
-  $.ajaxSetup({
-       headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-       }
-   });
+        echo json_encode($data);
+    }
 
-  function detail_dk(id){
-    $.ajax({
-        url : '/koor/detail/konsul',
-        data : {
-          'id_detail' : id
-        },
-        type : "post",
-        dataType : 'json',
-        success : function(response){
-          // console.log(response.id_konsul)
-          window.location.replace("/koor/detail/konsul/id/"+response.id_konsul+"");
+    public function edit_judul()
+    {
+        $a = 1;
+        if($a=='1'){
+            echo json_encode('ubah');
         }
-    });
-  }
+        print_r($a);
+    }
 
-</script>
-@endsection
+    public function simpan_judul_konsul(Request $request)
+    {
+        $id_konsul = $request->id_konsul;
+        $judul = $request->judul;
 
+        if($judul==$judul){
+            $pesan = "OK";
+        }else{
+            $update = DB::TABLE('master_konsultasi')->where('id_konsul',$id_konsul)->update(['judul_skripsi'=>$judul]);
+            if($update){
+                $pesan = "OK";
+            }else{
+                $pesan = "NO";
+            }
+        }
 
-
+        
+        echo json_encode($pesan);
+    }
